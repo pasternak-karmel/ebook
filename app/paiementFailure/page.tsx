@@ -13,7 +13,7 @@ export default function PaymentFailedPage() {
           </div>
           <CardTitle className="text-2xl font-bold">Paiement échoué</CardTitle>
           <CardDescription>
-            Nous sommes désolés, mais votre paiement n'a pas pu être traité.
+            Nous sommes désolés, mais votre paiement n&apos;a pas pu être traité.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -24,7 +24,7 @@ export default function PaymentFailedPage() {
             <Button variant="outline">Réessayer</Button>
           </Link>
           <Link href="/">
-            <Button>Retour à l'accueil</Button>
+            <Button>Retour à l&apos;accueil</Button>
           </Link>
         </CardFooter>
       </Card>

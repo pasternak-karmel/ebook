@@ -1,14 +1,19 @@
 "use client"
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Star, Check, ArrowRight, Play, Download, Users, Clock, Award } from "lucide-react"
+import { Star, Check, ArrowRight, Users, Clock, Award } from "lucide-react"
 
 export default function ProductPage() {
   const [progress, setProgress] = useState(13)
+  const productsRef = useRef<HTMLDivElement>(null)
+
+  const scrollToProducts = () => {
+    productsRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800">
@@ -39,7 +44,7 @@ export default function ProductPage() {
             </div>
             <div className="flex items-center space-x-4">
               <Award className="w-5 h-5 text-purple-500" />
-              <span>Certificat d'achèvement</span>
+              <span>Certificat d&apos;achèvement</span>
             </div>
           </div>
           <Card className="relative overflow-hidden">
@@ -50,15 +55,9 @@ export default function ProductPage() {
               <div className="aspect-video rounded-md overflow-hidden">
                 <img
                   src="/placeholder.svg?height=400&width=600"
-                  alt="Aperçu du cours"
+                  alt="Couverture du produit"
                   className="object-cover w-full h-full"
                 />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Button size="lg" className="rounded-full">
-                    <Play className="w-6 h-6 mr-2" />
-                    Regarder l'aperçu
-                  </Button>
-                </div>
               </div>
               <div>
                 <div className="flex justify-between text-sm mb-2">
@@ -71,7 +70,7 @@ export default function ProductPage() {
             <CardFooter className="flex justify-between">
               <div className="text-2xl font-bold">299€</div>
               <Button size="lg" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
-                Acheter maintenant
+                Acheter
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </CardFooter>
@@ -107,12 +106,6 @@ export default function ProductPage() {
                   </div>
                 ))}
               </CardContent>
-              <CardFooter>
-                <Button variant="outline" className="w-full">
-                  <Download className="w-5 h-5 mr-2" />
-                  Télécharger le programme complet
-                </Button>
-              </CardFooter>
             </Card>
           </TabsContent>
           <TabsContent value="temoignages" className="mt-6">
@@ -162,7 +155,7 @@ export default function ProductPage() {
                   <div>
                     <p className="text-muted-foreground">
                       Alex Dupont est un entrepreneur à succès et un expert reconnu dans le domaine des produits digitaux. 
-                      Avec plus de 15 ans d'expérience, il a lancé plusieurs startups prospères et conseillé de nombreuses entreprises Fortune 500.
+                      Avec plus de 15 ans d&apos;expérience, il a lancé plusieurs startups prospères et conseillé de nombreuses entreprises Fortune 500.
                     </p>
                   </div>
                 </div>
@@ -187,10 +180,50 @@ export default function ProductPage() {
 
         <div className="mt-16 text-center">
           <h2 className="text-3xl font-bold mb-4">Prêt à transformer vos idées en produits digitaux à succès ?</h2>
-          <Button size="lg" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
-            Commencer la formation maintenant
-            <ArrowRight className="w-5 h-5 ml-2" />
+          <Button size="lg" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white" onClick={scrollToProducts}>
+            Découvrez nos produits
+            <ArrowRight className="w-5 h-5 ml-2 animate-bounce" />
           </Button>
+        </div>
+
+        <div ref={productsRef} className="mt-24">
+          <h2 className="text-3xl font-bold mb-8 text-center">Nos produits les plus populaires</h2>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                title: "Maîtrise du Design UX/UI",
+                price: "249€",
+                image: "/placeholder.svg?height=200&width=300",
+                description: "Apprenez à créer des interfaces utilisateur intuitives et esthétiques."
+              },
+              {
+                title: "Growth Hacking Avancé",
+                price: "299€",
+                image: "/placeholder.svg?height=200&width=300",
+                description: "Découvrez les techniques de croissance rapide pour votre startup."
+              },
+              {
+                title: "Développement Full Stack",
+                price: "399€",
+                image: "/placeholder.svg?height=200&width=300",
+                description: "Devenez un développeur polyvalent capable de créer des applications web complètes."
+              }
+            ].map((product, index) => (
+              <Card key={index}>
+                <CardHeader>
+                  <img src={product.image} alt={product.title} className="w-full h-48 object-cover rounded-md" />
+                  <CardTitle className="mt-4">{product.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{product.description}</p>
+                </CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <span className="text-2xl font-bold">{product.price}</span>
+                  <Button>Acheter</Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>
