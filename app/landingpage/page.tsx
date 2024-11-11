@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ArrowRight, Star, Download, Shield, Check, Play } from "lucide-react"
+import { ArrowRight, Check, Play, Star } from "lucide-react"
+import { useState } from 'react'
 
 export default function LandingPage() {
   const [studentsCount, setStudentsCount] = useState(12546)
