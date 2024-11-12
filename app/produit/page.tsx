@@ -1,26 +1,37 @@
 "use client"
-import { useState, useRef } from 'react'
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Star, Check, ArrowRight, Users, Clock, Award } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { ArrowRight, Award, Check, Clock, Star, Users } from "lucide-react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useRef, useState } from 'react'
 
 export default function ProductPage() {
-  const [progress, setProgress] = useState(13)
+  const searchParams = useSearchParams();
+  const PaymentId = searchParams.get("id");
+
+  const router = useRouter();
+
+  const [progress] = useState(13)
   const productsRef = useRef<HTMLDivElement>(null)
 
   const scrollToProducts = () => {
     productsRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const handleBookClick = () => {
+    console.log(PaymentId);
+    router.push(`/paiement?id=${PaymentId}`);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4 py-16">
         <div className="grid gap-8 md:grid-cols-2">
           <div className="space-y-6">
-            <Badge className="text-lg px-3 py-1">Bestseller</Badge>
+            <Badge className="text-lg px-3 py-1">Meilleures ventes</Badge>
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
               Maîtrisez la Création de Produits Digitaux
             </h1>
@@ -69,7 +80,9 @@ export default function ProductPage() {
             </CardContent>
             <CardFooter className="flex justify-between">
               <div className="text-2xl font-bold">299€</div>
-              <Button size="lg" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white">
+              <Button size="lg" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white"
+              onClick={handleBookClick}
+              >
                 Acheter
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
@@ -133,7 +146,7 @@ export default function ProductPage() {
                     <CardDescription>{testimonial.role}</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground">"{testimonial.content}"</p>
+                    <p className="text-muted-foreground">{testimonial.content}</p>
                   </CardContent>
                 </Card>
               ))}
