@@ -5,7 +5,11 @@ import { toast } from "sonner";
 
 const domain = process.env.DOMAIN;
 
-export const fedaserver = async (type: string) => {
+interface PaymentProps {
+  type: string;
+}
+
+export const fedaserver = async ({ type }: PaymentProps) => {
   console.log(type);
   FedaPay.setApiKey(process.env.FEDA_SECRET as string);
   FedaPay.setEnvironment("live");
