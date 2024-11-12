@@ -2,19 +2,19 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
+// import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowRight, Award, Check, Clock, Star, Users } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Image from "next/image"
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 const products = {
   1: {
     title: "Formation complète en Facebook ads",
     cover: "/fbAds.webp",
     rating: 4.5,
-    price: "29.99€",
+    price: "1500 FCFA",
     description: "Maîtrisez les publicités Facebook pour booster votre business en ligne.",
     modules: [
       "Introduction aux Facebook Ads",
@@ -28,7 +28,7 @@ const products = {
     title: "Maitriser l'importation",
     cover: "/importation.png",
     rating: 4.8,
-    price: "49.99€",
+    price: "1500 FCFA",
     description: "Apprenez les secrets de l'importation pour développer votre entreprise.",
     modules: [
       "Bases de l'importation",
@@ -42,7 +42,7 @@ const products = {
     title: "Formation complète Canva + 100 templates réutilisables",
     cover: "/Image-Canva.jpg",
     rating: 4.6,
-    price: "39.99€",
+    price: "1500 FCFA",
     description: "Devenez un expert en design graphique avec Canva et nos templates exclusifs.",
     modules: [
       "Prise en main de Canva",
@@ -56,7 +56,7 @@ const products = {
     title: "Devenir millionnaire avec CHAT-GPT",
     cover: "/millionChatgpt.png",
     rating: 4.6,
-    price: "99.99€",
+    price: "1500 FCFA",
     description: "Exploitez le potentiel de l'IA pour générer des revenus passifs.",
     modules: [
       "Introduction à ChatGPT",
@@ -70,7 +70,7 @@ const products = {
     title: "Reussir dans le Trading du Forex",
     cover: "/trading.jpg",
     rating: 4.6,
-    price: "79.99€",
+    price: "1500 FCFA",
     description: "Maîtrisez les techniques de trading Forex pour réussir sur les marchés financiers.",
     modules: [
       "Fondamentaux du Forex",
@@ -84,7 +84,7 @@ const products = {
     title: "Maitriser Word- Excel et PowerPoint",
     cover: "/WEP.jpg",
     rating: 4.9,
-    price: "59.99€",
+    price: "1500 FCFA",
     description: "Devenez un expert de la suite Microsoft Office pour booster votre productivité.",
     modules: [
       "Word avancé",
@@ -98,7 +98,7 @@ const products = {
     title: "Créez rapidement votre site avec Wordpress",
     cover: "/wordpress.png",
     rating: 4.9,
-    price: "44.99€",
+    price: "1500 FCFA",
     description: "Apprenez à créer et gérer un site web professionnel avec WordPress.",
     modules: [
       "Installation et configuration",
@@ -112,14 +112,30 @@ const products = {
     title: "Pack de 22 formations",
     cover: "/pack22.jpeg",
     rating: 4.9,
-    price: "299.99€",
+    price: "3500 FCFA",
     description: "Un pack complet de 22 formations pour devenir un entrepreneur polyvalent.",
     modules: [
-      "Améliorer ta concentration 🧠",
-      "Maîtriser l'anglais 🇬🇧",
-      "Apprendre le mixage audio 🎧",
-      "Automatiser tes tâches sur ChatGPT 🤖",
-      "Importer des produits d'Alibaba 📦"
+      "Améliorer ta concentration 🧠 : Augmente ton efficacité au quotidien !",
+                      "Maîtriser l'anglais 🇬🇧 : Deviens fluent de A à Z !",
+                      "Apprendre le mixage audio* 🎧 : Crée des sons professionnels en un rien de temps !",
+                      "Automatiser tes tâches sur ChatGPT 🤖 : Optimise ton temps avec l'IA la plus puissante !",
+                      "Importer des produits d'Alibaba* 📦 : Domine le commerce Chine-Afrique",
+                      "Réussir sur ComeUp 💼 : Deviens un pro du freelancing !",
+                      "Créer des images avec Midjourney 🖼️ : Libère ta créativité avec l'IA pour des visuels uniques !",
+                      "Lancer un e-commerce qui cartonne 🛒 : Monte ton business en ligne rentable !",
+                      "Créer une boutique Shopify de A 🏪 : Domine Shopify et vends tes produits !",
+                      "Apprendre à programmer👨‍💻 : Deviens développeur en un clin d'œil !",
+                      "Maîtriser Excel VBA 📊 : Automatiser les tâches en un rien de temps !",
+                      "Gérer les publicités Facebook 📣 : Génère des ventes grâce à la publicité ciblée !",
+                      "Réussir en affiliation💰 : Apprends à gagner de l'argent avec l'affiliation !",
+                      "Monter des vidéos pro 🎥 : Maîtrise Adobe Premiere Pro et DaVinci Resolve pour des vidéos de qualité !",
+                      "Créer un site WordPress🖥️ : Mets en ligne ton propre site en quelques clics !",
+                      "Investir en bourse📈 : Fais fructifier ton argent intelligemment !",
+                      "Maîtriser Google Analytics 📊 : Analyse tes performances comme un pro !",
+                      "Devenir expert en Print On Demand 👕 : Crée et vends tes designs sans stock !",
+                      "Publicité sur les réseaux sociaux 📱 : Apprends à toucher une large audience !",
+                      "Formation trading📉 : Maîtrise les marchés financiers pour générer des profits !",
+                      "Formation mindset Barry 🧠 : Développe un mental d'acier pour atteindre tes objectifs !",
     ]
   }
 }
@@ -129,7 +145,7 @@ export default function ProductPage() {
   const productId = searchParams.get("id");
   const router = useRouter();
 
-  const [progress] = useState(13)
+  // const [progress] = useState(13)
   const productsRef = useRef<HTMLDivElement>(null)
 
   const scrollToProducts = () => {
@@ -139,6 +155,9 @@ export default function ProductPage() {
   const handleBookClick = () => {
     router.push(`/paiement?id=${productId}`);
   };
+  const handleHomePage = () => {
+    router.push(`/`);
+  };
 
   const product = products[productId] || products[1]; // Default to first product if ID not found
 
@@ -147,6 +166,12 @@ export default function ProductPage() {
       <div className="container mx-auto px-4 py-16">
         <div className="grid gap-8 md:grid-cols-2">
           <div className="space-y-6">
+          <Button size="lg" className="bg-black text-white"
+              onClick={handleHomePage}
+              >
+                Retour
+            
+              </Button>
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
               {product.title}
             </h1>
@@ -170,7 +195,7 @@ export default function ProductPage() {
             </div>
             <div className="flex items-center space-x-4">
               <Award className="w-5 h-5 text-purple-500" />
-              <span>Certificat d'achèvement</span>
+              <span>Certificat d&apos;achèvement</span>
             </div>
           </div>
           <Card className="relative overflow-hidden">
@@ -187,13 +212,13 @@ export default function ProductPage() {
                   className="object-cover w-full h-full"
                 />
               </div>
-              <div>
-                <div className="flex justify-between text-sm mb-2">
+              {/* <div> */}
+                {/* <div className="flex justify-between text-sm mb-2">
                   <span>Progression</span>
                   <span>{progress}%</span>
                 </div>
                 <Progress value={progress} className="w-full" />
-              </div>
+              </div> */}
             </CardContent>
             <CardFooter className="flex justify-between">
               <div className="text-2xl font-bold">{product.price}</div>
