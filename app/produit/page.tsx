@@ -6,12 +6,127 @@ import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowRight, Award, Check, Clock, Star, Users } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
+import Image from "next/image"
 import { useRef, useState } from 'react'
+
+const products = {
+  1: {
+    title: "Formation complète en Facebook ads",
+    cover: "/fbAds.webp",
+    rating: 4.5,
+    price: "29.99€",
+    description: "Maîtrisez les publicités Facebook pour booster votre business en ligne.",
+    modules: [
+      "Introduction aux Facebook Ads",
+      "Création de campagnes efficaces",
+      "Ciblage avancé",
+      "Optimisation des performances",
+      "Analyse et reporting"
+    ]
+  },
+  2: {
+    title: "Maitriser l'importation",
+    cover: "/importation.png",
+    rating: 4.8,
+    price: "49.99€",
+    description: "Apprenez les secrets de l'importation pour développer votre entreprise.",
+    modules: [
+      "Bases de l'importation",
+      "Recherche de fournisseurs",
+      "Négociation et contrats",
+      "Logistique et douanes",
+      "Gestion des risques"
+    ]
+  },
+  3: {
+    title: "Formation complète Canva + 100 templates réutilisables",
+    cover: "/Image-Canva.jpg",
+    rating: 4.6,
+    price: "39.99€",
+    description: "Devenez un expert en design graphique avec Canva et nos templates exclusifs.",
+    modules: [
+      "Prise en main de Canva",
+      "Création de designs professionnels",
+      "Utilisation avancée des templates",
+      "Branding et cohérence visuelle",
+      "Optimisation pour les réseaux sociaux"
+    ]
+  },
+  4: {
+    title: "Devenir millionnaire avec CHAT-GPT",
+    cover: "/millionChatgpt.png",
+    rating: 4.6,
+    price: "99.99€",
+    description: "Exploitez le potentiel de l'IA pour générer des revenus passifs.",
+    modules: [
+      "Introduction à ChatGPT",
+      "Création de contenu avec l'IA",
+      "Automatisation des tâches",
+      "Développement de produits IA",
+      "Stratégies de monétisation"
+    ]
+  },
+  5: {
+    title: "Reussir dans le Trading du Forex",
+    cover: "/trading.jpg",
+    rating: 4.6,
+    price: "79.99€",
+    description: "Maîtrisez les techniques de trading Forex pour réussir sur les marchés financiers.",
+    modules: [
+      "Fondamentaux du Forex",
+      "Analyse technique et fondamentale",
+      "Gestion des risques",
+      "Psychologie du trading",
+      "Stratégies avancées"
+    ]
+  },
+  6: {
+    title: "Maitriser Word- Excel et PowerPoint",
+    cover: "/WEP.jpg",
+    rating: 4.9,
+    price: "59.99€",
+    description: "Devenez un expert de la suite Microsoft Office pour booster votre productivité.",
+    modules: [
+      "Word avancé",
+      "Excel pour l'analyse de données",
+      "Présentations PowerPoint percutantes",
+      "Automatisation avec VBA",
+      "Intégration des outils Office"
+    ]
+  },
+  7: {
+    title: "Créez rapidement votre site avec Wordpress",
+    cover: "/wordpress.png",
+    rating: 4.9,
+    price: "44.99€",
+    description: "Apprenez à créer et gérer un site web professionnel avec WordPress.",
+    modules: [
+      "Installation et configuration",
+      "Choix et personnalisation de thèmes",
+      "Création de contenu",
+      "Plugins essentiels",
+      "SEO et performance"
+    ]
+  },
+  8: {
+    title: "Pack de 22 formations",
+    cover: "/pack22.jpeg",
+    rating: 4.9,
+    price: "299.99€",
+    description: "Un pack complet de 22 formations pour devenir un entrepreneur polyvalent.",
+    modules: [
+      "Améliorer ta concentration 🧠",
+      "Maîtriser l'anglais 🇬🇧",
+      "Apprendre le mixage audio 🎧",
+      "Automatiser tes tâches sur ChatGPT 🤖",
+      "Importer des produits d'Alibaba 📦"
+    ]
+  }
+}
 
 export default function ProductPage() {
   const searchParams = useSearchParams();
-  const PaymentId = searchParams.get("id");
-
+  const productId = searchParams.get("id");
   const router = useRouter();
 
   const [progress] = useState(13)
@@ -22,27 +137,27 @@ export default function ProductPage() {
   }
 
   const handleBookClick = () => {
-    console.log(PaymentId);
-    router.push(`/paiement?id=${PaymentId}`);
+    router.push(`/paiement?id=${productId}`);
   };
+
+  const product = products[productId] || products[1]; // Default to first product if ID not found
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4 py-16">
         <div className="grid gap-8 md:grid-cols-2">
           <div className="space-y-6">
-            <Badge className="text-lg px-3 py-1">Meilleures ventes</Badge>
             <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-              Maîtrisez la Création de Produits Digitaux
+              {product.title}
             </h1>
             <p className="text-xl text-muted-foreground">
-              Transformez vos idées en produits digitaux lucratifs avec notre formation complète et interactive.
+              {product.description}
             </p>
             <div className="flex items-center space-x-2">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />
+                <Star key={i} className={`w-5 h-5 ${i < Math.floor(product.rating) ? "fill-yellow-400 text-yellow-400" : "fill-gray-300 text-gray-300"}`} />
               ))}
-              <span className="font-medium">4.9</span>
+              <span className="font-medium">{product.rating}</span>
               <span className="text-muted-foreground">(2,945 avis)</span>
             </div>
             <div className="flex items-center space-x-4">
@@ -55,7 +170,7 @@ export default function ProductPage() {
             </div>
             <div className="flex items-center space-x-4">
               <Award className="w-5 h-5 text-purple-500" />
-              <span>Certificat d&apos;achèvement</span>
+              <span>Certificat d'achèvement</span>
             </div>
           </div>
           <Card className="relative overflow-hidden">
@@ -64,9 +179,11 @@ export default function ProductPage() {
             </CardHeader>
             <CardContent className="grid gap-4">
               <div className="aspect-video rounded-md overflow-hidden">
-                <img
-                  src="/placeholder.svg?height=400&width=600"
-                  alt="Couverture du produit"
+                <Image
+                  src={product.cover}
+                  alt={product.title}
+                  width={600}
+                  height={400}
                   className="object-cover w-full h-full"
                 />
               </div>
@@ -79,7 +196,7 @@ export default function ProductPage() {
               </div>
             </CardContent>
             <CardFooter className="flex justify-between">
-              <div className="text-2xl font-bold">299€</div>
+              <div className="text-2xl font-bold">{product.price}</div>
               <Button size="lg" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white"
               onClick={handleBookClick}
               >
@@ -101,18 +218,11 @@ export default function ProductPage() {
               <CardHeader>
                 <CardTitle>Modules de formation</CardTitle>
                 <CardDescription>
-                  Explorez notre programme complet pour maîtriser la création de produits digitaux
+                  Explorez notre programme complet pour maîtriser {product.title}
                 </CardDescription>
               </CardHeader>
               <CardContent className="grid gap-4">
-                {[
-                  "Fondamentaux des produits digitaux",
-                  "Recherche de marché et validation d'idées",
-                  "Conception et prototypage",
-                  "Développement et tests",
-                  "Stratégies de lancement et de marketing",
-                  "Optimisation et croissance",
-                ].map((module, index) => (
+                {product.modules.map((module, index) => (
                   <div key={index} className="flex items-center space-x-2">
                     <Check className="w-5 h-5 text-green-500" />
                     <span>{module}</span>
@@ -202,29 +312,10 @@ export default function ProductPage() {
         <div ref={productsRef} className="mt-24">
           <h2 className="text-3xl font-bold mb-8 text-center">Nos produits les plus populaires</h2>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                title: "Maîtrise du Design UX/UI",
-                price: "249€",
-                image: "/placeholder.svg?height=200&width=300",
-                description: "Apprenez à créer des interfaces utilisateur intuitives et esthétiques."
-              },
-              {
-                title: "Growth Hacking Avancé",
-                price: "299€",
-                image: "/placeholder.svg?height=200&width=300",
-                description: "Découvrez les techniques de croissance rapide pour votre startup."
-              },
-              {
-                title: "Développement Full Stack",
-                price: "399€",
-                image: "/placeholder.svg?height=200&width=300",
-                description: "Devenez un développeur polyvalent capable de créer des applications web complètes."
-              }
-            ].map((product, index) => (
-              <Card key={index}>
+            {Object.entries(products).slice(0, 3).map(([id, product]) => (
+              <Card key={id}>
                 <CardHeader>
-                  <img src={product.image} alt={product.title} className="w-full h-48 object-cover rounded-md" />
+                  <Image src={product.cover} alt={product.title} width={300} height={200} className="w-full h-48 object-cover rounded-md" />
                   <CardTitle className="mt-4">{product.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -232,7 +323,7 @@ export default function ProductPage() {
                 </CardContent>
                 <CardFooter className="flex justify-between items-center">
                   <span className="text-2xl font-bold">{product.price}</span>
-                  <Button>Acheter</Button>
+                  <Button onClick={() => router.push(`/produit?id=${id}`)}>Acheter</Button>
                 </CardFooter>
               </Card>
             ))}

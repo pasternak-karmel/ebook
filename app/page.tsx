@@ -72,23 +72,51 @@ export default function BookLandingPage() {
             {[
               {
                 id: 1,
-                title: "L'Odyssée des Rêves",
-                cover: "/placeholder.svg?height=400&width=300",
+                title: "Formation complète en Facebook ads",
+                cover: "/fbAds.webp?height=400&width=300",
                 rating: 4.5,
               },
               {
                 id: 2,
-                title: "Le Secret des Étoiles",
+                title: "Maitriser l'importation",
 
-                cover: "/placeholder.svg?height=400&width=300",
+                cover: "/importation.png?height=400&width=300",
                 rating: 4.8,
               },
               {
                 id: 3,
-                title: "La Symphonie du Silence",
+                title: "Formation complète Canva + 100 templates réutilisables",
 
-                cover: "/placeholder.svg?height=400&width=300",
+                cover: "/Image-Canva.jpg?height=400&width=300",
                 rating: 4.6,
+              },
+              {
+                id: 4,
+                title: "Devenir millionnaire avec CHAP-GPT",
+
+                cover: "/millionChatgpt.png?height=400&width=300",
+                rating: 4.6,
+              },
+              {
+                id: 5,
+                title: "Reussir dans le Trading du Forex",
+
+                cover: "/trading.jpg?height=400&width=300",
+                rating: 4.6,
+              },
+              {
+                id: 6,
+                title: "Maitriser Word- Excel et PowerPoint",
+
+                cover: "/WEP.jpg?height=400&width=300",
+                rating: 4.9,
+              },
+              {
+                id: 7,
+                title: "Créez rapidement votre site avec Wordpress",
+
+                cover: "/wordpress.png?height=400&width=300",
+                rating: 4.9,
               },
             ].map((book, index) => (
               <Card key={index} className="flex flex-col justify-between">
@@ -141,11 +169,10 @@ export default function BookLandingPage() {
               <div className="space-y-6">
                 <Badge className="text-lg px-3 py-1">Formation Phare</Badge>
                 <h2 className="text-4xl font-extrabold tracking-tight lg:text-5xl">
-                  Maîtrisez la Création de Produits Digitaux
+                  Pack de 22 formations 
                 </h2>
                 <p className="text-xl text-muted-foreground">
-                  Transformez vos idées en produits digitaux lucratifs avec
-                  notre formation complète et interactive.
+                  Faîtes vous assez de revenu grâce à cet ensemble
                 </p>
                 <div className="flex items-center space-x-2">
                   {[...Array(5)].map((_, i) => (
@@ -171,24 +198,35 @@ export default function BookLandingPage() {
                     <Image
                       width={100}
                       height={100}
-                      src="/placeholder.svg?height=400&width=600"
+                      src="/pack22.jpeg?height=400&width=600"
                       alt="Aperçu du cours"
                       className="object-cover w-full h-full"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Button size="lg" className="rounded-full">
-                        <Play className="w-6 h-6 mr-2" />
-                        Regarder l&apos;aperçu
-                      </Button>
-                    </div>
+                    
                   </div>
                   <div className="grid gap-2">
                     {[
-                      "Fondamentaux des produits digitaux",
-                      "Recherche de marché et validation d'idées",
-                      "Conception et prototypage",
-                      "Développement et tests",
-                      "Stratégies de lancement et de marketing",
+                      "Améliorer ta concentration 🧠 : Augmente ton efficacité au quotidien !",
+                      "Maîtriser l'anglais 🇬🇧 : Deviens fluent de A à Z !",
+                      "Apprendre le mixage audio* 🎧 : Crée des sons professionnels en un rien de temps !",
+                      "Automatiser tes tâches sur ChatGPT 🤖 : Optimise ton temps avec l'IA la plus puissante !",
+                      "Importer des produits d'Alibaba* 📦 : Domine le commerce Chine-Afrique",
+                      "Réussir sur ComeUp 💼 : Deviens un pro du freelancing !",
+                      "Créer des images avec Midjourney 🖼️ : Libère ta créativité avec l'IA pour des visuels uniques !",
+                      "Lancer un e-commerce qui cartonne 🛒 : Monte ton business en ligne rentable !",
+                      "Créer une boutique Shopify de A 🏪 : Domine Shopify et vends tes produits !",
+                      "Apprendre à programmer👨‍💻 : Deviens développeur en un clin d'œil !",
+                      "Maîtriser Excel VBA 📊 : Automatiser les tâches en un rien de temps !",
+                      "Gérer les publicités Facebook 📣 : Génère des ventes grâce à la publicité ciblée !",
+                      "Réussir en affiliation💰 : Apprends à gagner de l'argent avec l'affiliation !",
+                      "Monter des vidéos pro 🎥 : Maîtrise Adobe Premiere Pro et DaVinci Resolve pour des vidéos de qualité !",
+                      "Créer un site WordPress🖥️ : Mets en ligne ton propre site en quelques clics !",
+                      "Investir en bourse📈 : Fais fructifier ton argent intelligemment !",
+                      "Maîtriser Google Analytics 📊 : Analyse tes performances comme un pro !",
+                      "Devenir expert en Print On Demand 👕 : Crée et vends tes designs sans stock !",
+                      "Publicité sur les réseaux sociaux 📱 : Apprends à toucher une large audience !",
+                      "Formation trading📉 : Maîtrise les marchés financiers pour générer des profits !",
+                      "Formation mindset Barry 🧠 : Développe un mental d'acier pour atteindre tes objectifs !",
                     ].map((module, index) => (
                       <div key={index} className="flex items-center space-x-2">
                         <Check className="w-5 h-5 text-green-500" />
@@ -198,12 +236,12 @@ export default function BookLandingPage() {
                   </div>
                 </CardContent>
                 <CardFooter className="flex justify-between">
-                  <div className="text-2xl font-bold">299€</div>
+                  <div className="text-2xl font-bold">3000 FCFA</div>
                   <Button
                     size="lg"
                     className="bg-gradient-to-r from-purple-500 to-blue-500 text-white"
                   >
-                    S&apos;inscrire maintenant
+                    Acheter maintenant
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </CardFooter>
@@ -220,11 +258,10 @@ export default function BookLandingPage() {
             Prêt à Commencer Votre Prochaine Aventure ?
           </h2>
           <p className="mx-auto max-w-[600px] text-primary-foreground/90 md:text-xl mb-8">
-            Rejoignez notre communauté de lecteurs passionnés et découvrez des
-            histoires qui vous transporteront.
+            Rejoignez notre communauté d&apos; entrepreneurs passionnés et générez vos premiers revenus passifs.
           </p>
           <Button className="bg-white text-primary hover:bg-gray-200" size="lg">
-            S&apos;inscrire maintenant
+            Découvrir nos formations
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         </div>
@@ -234,7 +271,7 @@ export default function BookLandingPage() {
       <footer className="w-full py-6 bg-gray-800 text-white">
         <div className="container mx-auto px-4">
           <p className="text-center text-sm">
-            © 2024 Notre Librairie. Tous droits réservés.
+            © 2024 CBCShop. Tous droits réservés.
           </p>
         </div>
       </footer>
