@@ -1,17 +1,25 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-// import { toast } from "sonner";
-import { Suspense } from "react";
+import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
-export default function FedaKarmelPage() {
-  const searchParams = useSearchParams();
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+
+interface Props {
+  transactionId: string;
+  email: string;
+}
+function TransactionCheck({ transactionId, email }: Props) {
   const router = useRouter();
-  const transactionId = searchParams.get("id");
-  const email = searchParams.get("email");
   const [loading, setLoading] = useState(true);
-  const [error] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const verifyTransaction = async () => {
@@ -46,39 +54,69 @@ export default function FedaKarmelPage() {
         }
       } catch (error) {
         console.error("Erreur de vérification de la transaction", error);
-        // toast.error(error.message || "Une erreur est survenue");
-        // setError(error.message);
+        setError(
+          error instanceof Error ? error.message : "Une erreur est survenue"
+        );
       } finally {
         setLoading(false);
       }
     };
 
-    if (transactionId) {
-      verifyTransaction();
-    }
+    verifyTransaction();
   }, [transactionId, email, router]);
 
   if (loading) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center">
-        Chargement...
-      </div>
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Vérification de la transaction</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>Nous sommes en train d&apos;effectuer votre transaction...</p>
+        </CardContent>
+      </Card>
     );
   }
 
   if (error) {
     return (
-      <div className="h-screen flex flex-col items-center justify-center">
-        <p>{error}</p>
-      </div>
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Erreur</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-red-500">{error}</p>
+        </CardContent>
+        <CardFooter>
+          <Button onClick={() => router.push("/")}>
+            Retour à l&apos;accueil
+          </Button>
+        </CardFooter>
+      </Card>
     );
   }
 
+  return null;
+}
+
+export default function FedaKarmelPage() {
   return (
-    <Suspense fallback={<div>Chargement en cours...</div>}>
-      <div className="h-screen flex flex-col items-center justify-center">
-        Nous sommes en train d&apos;effectuer votre transaction...
-      </div>
+    <Suspense
+      fallback={
+        <div className="h-screen flex flex-col items-center justify-center">
+          Chargement en cours...
+        </div>
+      }
+    >
+      <TransactionCheckWrapper />
     </Suspense>
   );
+}
+
+async function TransactionCheckWrapper() {
+  const searchParams = new URLSearchParams(window.location.search);
+  const transactionId = searchParams.get("id");
+  const email = searchParams.get("email");
+
+  return <TransactionCheck transactionId={transactionId!} email={email!} />;
 }
