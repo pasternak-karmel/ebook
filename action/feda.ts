@@ -1,7 +1,9 @@
 "use server";
 
+import { formSchema } from "@/app/paiement/payment-form";
 import { FedaPay, Transaction } from "fedapay";
 import { toast } from "sonner";
+import { z } from "zod";
 
 const domain = process.env.DOMAIN;
 
@@ -9,23 +11,33 @@ interface PaymentProps {
   type: string;
 }
 
-export const fedaserver = async ({ type }: PaymentProps) => {
-  console.log(type);
+export const fedaserver = async (
+  values: z.infer<typeof formSchema>,
+  { type }: PaymentProps
+) => {
+
   FedaPay.setApiKey(process.env.FEDA_SECRET as string);
   FedaPay.setEnvironment("live");
+  let amount = 0;
+
+  if (type !== "8") {
+    amount = 1500;
+  } else {
+    amount = 3500;
+  }
 
   try {
     const transaction = await Transaction.create({
       description: "Confirmer votre achats",
-      amount: 5000,
-      callback_url: `${domain}/checkTransaction`,
+      amount,
+      callback_url: `${domain}/checkTransaction?email=${values.email}`,
       currency: {
         iso: "XOF",
       },
       customer: {
-        firstname: "firstname",
-        lastname: "lastname",
-        email: "email@gmail.com",
+        firstname: values.firstName,
+        lastname: values.lastName,
+        email: values.email,
         phone_number: {
           number: "68799356",
           country: "BJ",

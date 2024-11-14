@@ -16,8 +16,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { PhoneInput } from "@/components/ui/phone-input";
 
-const formSchema = z.object({
+export const formSchema = z.object({
   firstName: z.string().min(2, {
     message: "Le prénom doit contenir au moins 2 caractères.",
   }),
@@ -27,8 +28,8 @@ const formSchema = z.object({
   email: z.string().email({
     message: "Veuillez entrer une adresse email valide.",
   }),
-  cardNumber: z.string().regex(/^\d{16}$/, {
-    message: "Le numéro de carte doit contenir 16 chiffres.",
+  pays: z.string({
+    message: "Le numéro est réquis.",
   }),
 });
 
@@ -40,14 +41,17 @@ export default function Paymentform({ type }: { type: string }) {
       firstName: "",
       lastName: "",
       email: "",
-      cardNumber: "",
+      pays: "+229",
     },
   });
 
-  const onSubmit = async () => {
-    // console.log(values);
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+
+    // if(values.pays < "1222" && values.pays > "2000459804" ) return <div>Invalid number</div>
+
+    console.log(values);
     setLoadingImmediate(true);
-    const url = await fedaserver({ type });
+    const url = await fedaserver(values,{ type });
     if (url) {
       window.location.href = url;
     }
@@ -97,12 +101,16 @@ export default function Paymentform({ type }: { type: string }) {
         />
         <FormField
           control={form.control}
-          name="cardNumber"
+          name="pays"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Numéro de carte</FormLabel>
+              <FormLabel>Entrez votre numéro</FormLabel>
               <FormControl>
-                <Input placeholder="1234567890123456" {...field} />
+                <PhoneInput
+                  placeholder="+22900000000"
+                  {...field}
+                  defaultCountry="BJ"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

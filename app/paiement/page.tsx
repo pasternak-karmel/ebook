@@ -9,9 +9,6 @@ import {
 import PaymentForm from "./payment-form";
 import { useSearchParams } from "next/navigation";
 
-// interface PaymentProps {
-//   PaymentId: string;
-// }
 
 export default function PaymentPage() {
   const searchParams = useSearchParams();

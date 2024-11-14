@@ -2,11 +2,13 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function FedaKarmelPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const transactionId = searchParams.get("id");
+  const email = searchParams.get("email");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,6 +32,8 @@ export default function FedaKarmelPage() {
         const data = await res.json();
 
         if (data.type === "approved") {
+          if (!email) return <div>Email not provided</div>;
+          localStorage.setItem("email", email);
           router.push(`/paiementSuccess`);
         } else if (data.type === "pending") {
           router.push("/paiementFailure");
@@ -40,7 +44,7 @@ export default function FedaKarmelPage() {
         }
       } catch (error) {
         console.error("Error verifying transaction", error);
-        return alert("Une erreur est subvenue");
+        return toast.error("Une erreur est subvenue");
       } finally {
         setLoading(false);
       }
@@ -49,11 +53,19 @@ export default function FedaKarmelPage() {
     if (transactionId) {
       verifyTransaction();
     }
-  }, [transactionId, router]);
+  }, [transactionId, email, router]);
 
   if (loading) {
-    return <div>Chargement...</div>;
+    return (
+      <div className="h-screen flex flex-col items-center justify-center">
+        Chargement...
+      </div>
+    );
   }
 
-  return <div>Nous sommes entrain d&apos;éffectuer votre transaction...</div>;
+  return (
+    <div className="h-screen flex flex-col items-center justify-center">
+      Nous sommes entrain d&apos;éffectuer votre transaction...
+    </div>
+  );
 }
