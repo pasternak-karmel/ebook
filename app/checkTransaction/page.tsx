@@ -2,7 +2,8 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
+// import { toast } from "sonner";
+import { Suspense } from "react";
 
 export default function FedaKarmelPage() {
   const searchParams = useSearchParams();
@@ -10,13 +11,17 @@ export default function FedaKarmelPage() {
   const transactionId = searchParams.get("id");
   const email = searchParams.get("email");
   const [loading, setLoading] = useState(true);
+  const [error] = useState<string | null>(null);
 
   useEffect(() => {
     const verifyTransaction = async () => {
       setLoading(true);
       try {
         if (!transactionId) {
-          throw new Error("Transaction ID is missing");
+          throw new Error("L'identifiant de transaction est manquant");
+        }
+        if (!email) {
+          throw new Error("Adresse email manquante");
         }
 
         const res = await fetch("/api/fedatransac", {
@@ -32,19 +37,17 @@ export default function FedaKarmelPage() {
         const data = await res.json();
 
         if (data.type === "approved") {
-          if (!email) return <div>Email not provided</div>;
           localStorage.setItem("email", email);
           router.push(`/paiementSuccess`);
-        } else if (data.type === "pending") {
-          router.push("/paiementFailure");
-        } else if (data.type === "failed") {
+        } else if (data.type === "pending" || data.type === "failed") {
           router.push("/paiementFailure");
         } else {
           router.push("/unknown-status");
         }
       } catch (error) {
-        console.error("Error verifying transaction", error);
-        return toast.error("Une erreur est subvenue");
+        console.error("Erreur de vérification de la transaction", error);
+        // toast.error(error.message || "Une erreur est survenue");
+        // setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -63,9 +66,19 @@ export default function FedaKarmelPage() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center">
+        <p>{error}</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="h-screen flex flex-col items-center justify-center">
-      Nous sommes entrain d&apos;éffectuer votre transaction...
-    </div>
+    <Suspense fallback={<div>Chargement en cours...</div>}>
+      <div className="h-screen flex flex-col items-center justify-center">
+        Nous sommes en train d&apos;effectuer votre transaction...
+      </div>
+    </Suspense>
   );
 }

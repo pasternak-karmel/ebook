@@ -8,12 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowRight, Award, Check, Clock, Star, Users } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useRef } from "react";
+import { Suspense, useRef } from "react";
 
 const products: {
   [key: number]: {
@@ -163,12 +162,19 @@ const products: {
   },
 };
 
-export default function ProductPage() {
+export default function ProduitPage() {
+  return (
+    <Suspense fallback={<div>Chargement des informations de la page...</div>}>
+      <ProductPage />
+    </Suspense>
+  );
+}
+
+function ProductPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const productId = Number(searchParams.get("id"));
 
-  // const [progress] = useState(13)
   const productsRef = useRef<HTMLDivElement>(null);
 
   const scrollToProducts = () => {
@@ -243,13 +249,6 @@ export default function ProductPage() {
                   className="object-cover w-full h-full"
                 />
               </div>
-              {/* <div> */}
-              {/* <div className="flex justify-between text-sm mb-2">
-                  <span>Progression</span>
-                  <span>{progress}%</span>
-                </div>
-                <Progress value={progress} className="w-full" />
-              </div> */}
             </CardContent>
             <CardFooter className="flex justify-between">
               <div className="text-2xl font-bold">{product.price}</div>
