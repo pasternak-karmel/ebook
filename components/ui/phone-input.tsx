@@ -15,7 +15,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Input, InputProps } from "@/components/ui/input";
+// import { Input, InputProps } from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -53,7 +54,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
            *
            * @param {E164Number | undefined} value - The entered value
            */
-          onChange={(value) => onChange?.(value || "")}
+          onChange={(value) => onChange?.(value || ("" as RPNInput.Value))}
           {...props}
         />
       );
@@ -61,7 +62,9 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> =
   );
 PhoneInput.displayName = "PhoneInput";
 
-const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const InputComponent = React.forwardRef<HTMLInputElement, any>(
+  // const InputComponent = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => (
     <Input
       className={cn("rounded-e-lg rounded-s-none", className)}
