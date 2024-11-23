@@ -387,7 +387,7 @@ function ProductPage() {
           <h2 className="text-3xl font-bold mb-8 text-center">
             Nos produits les plus populaires
           </h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {Object.entries(products)
               .slice(0, 3)
               .map(([id, product]) => (
