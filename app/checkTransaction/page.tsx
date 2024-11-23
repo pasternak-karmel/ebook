@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -12,14 +12,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-interface Props {
-  transactionId: string;
-  email: string;
-}
-function TransactionCheck({ transactionId, email }: Props) {
+// interface Props {
+//   transactionId: string;
+//   email: string;
+// }
+
+
+function FedaKarmelPageContent() {
+  const searchParams = useSearchParams();
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const transactionId = searchParams.get("id");
+  const email = searchParams.get("email");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verifyTransaction = async () => {
@@ -96,27 +101,14 @@ function TransactionCheck({ transactionId, email }: Props) {
     );
   }
 
+  // return <div>Traitement de votre paiement...</div>;
   return null;
 }
 
 export default function FedaKarmelPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="h-screen flex flex-col items-center justify-center">
-          Chargement en cours...
-        </div>
-      }
-    >
-      <TransactionCheckWrapper />
+    <Suspense fallback={<div>Chargement des paramètres...</div>}>
+      <FedaKarmelPageContent />
     </Suspense>
   );
-}
-
-async function TransactionCheckWrapper() {
-  const searchParams = new URLSearchParams(window.location.search);
-  const transactionId = searchParams.get("id");
-  const email = searchParams.get("email");
-
-  return <TransactionCheck transactionId={transactionId!} email={email!} />;
 }
