@@ -20,7 +20,7 @@ export default function PaymentFailedPage() {
           <p>Veuillez vérifier vos informations de paiement et réessayer.</p>
         </CardContent>
         <CardFooter className="flex justify-center space-x-4">
-          <Link href="/payment">
+          <Link href="/paiement">
             <Button variant="outline">Réessayer</Button>
           </Link>
           <Link href="/">
